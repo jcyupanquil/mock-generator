@@ -1,20 +1,128 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-	<meta charset="UTF-8">
-	<title>Generador de Mock</title>
-	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css" integrity="sha384-GJzZqFGwb1QTTN6wy59ffF1BuGJpLSa9DkKMp0DgiMDm4iYMj70gZWKYbI706tWS" crossorigin="anonymous">
-</head>
-<body>
-	<h1>Generador de Mock</h1>
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <title>Mock Generator</title>
+		<link rel="stylesheet" href="lib/css/bootstrap.min.css">
+	    <link rel="stylesheet" href="lib/css/jquery.steps.css">
+  </head>
+  <body>
+      <div class="container">
+      <div class="page-header mt-2 mb-3">
+        <h1 class="text-center">Generador de Mock Virtual Bank</h1>
+      </div>
+      <div class="card mb-3 mt-2 d-none">
+		  <div class="card-body">
+		  <form class="row">
+			  <div class="form-check ml-3 mb-2 col-md-12">
+			    <input type="checkbox" class="form-check-input" id="chkAddHeader">
+			    <label class="form-check-label" for="chkAddHeader">Incluir cabecera</label>
+			  </div>
+			</form>
+		  </div>
+		</div>
+
+
+
+		<form id="frmMockData" action="#">
+		    <div>
+		        <h3>Atributos</h3>
+		        <section>
+		        	<div class="form-row mb-2">
+			        	<div class="form-group col-md-12">
+						    <label for="txtTransactionCode">Código de transacción</label>
+						    <input type="text" class="form-control" id="txtTransactionCode" placeholder="Código de transacción" maxlength="8">
+						    <small class="form-text text-muted">Si se ingresa un descriptor o una clase, esto se completa automáticamente</small>
+						</div>
+					</div>
+		        	<div class="col-12 mb-2">
+		        		Seleccione desde dónde extraer los atributos del mock:
+		        	</div>
+		        	<div class="d-flex justify-content-around">
+		        		<div class="form-check">
+						  <input class="form-check-input" type="radio" name="chkMockAttributesSource" id="chkJsonAttr" value="json" checked="checked">
+						  <label class="form-check-label" for="chkJsonAttr">
+						    JSON
+						  </label>
+						</div>
+			        	<div class="form-check">
+						  <input class="form-check-input" type="radio" name="chkMockAttributesSource" id="chkDescriptor" value="descriptor">
+						  <label class="form-check-label" for="chkDescriptor">
+						    Descriptor
+						  </label>
+						</div>
+						<div class="form-check">
+						  <input class="form-check-input" type="radio" name="chkMockAttributesSource" id="chkRooClass" value="rooclass" disabled="disabled">
+						  <label class="form-check-label" for="chkRooClass">
+						    Clase Roo
+						  </label>
+						</div>
+					</div>
+					<div class="form-group h-75">
+						 <label for="txtAttributes"></label>
+						 <textarea class="form-control h-75 required" id="txtAttributes"></textarea>
+					</div>
+		        </section>
+		        <h3>Mock Data</h3>
+		        <section>
+		        	<div class="row">
+			        	<div class="form-group col-md-6">
+						    <label for="txtCaseNumber">Número de caso(C0 - C9)</label>
+						    <input type="text" class="form-control" id="txtCaseNumber" placeholder="Número de caso" maxlength="2" value="C0">
+						</div>
+						<div class="form-check col-md-6 mt-5">
+						    <input type="checkbox" class="form-check-input" id="chkAddHeader">
+						    <label class="form-check-label" for="chkAddHeader">Incluir cabecera</label>
+						 </div>
+			        	<div class="col-12 mb-2">
+			        		Ingrese la data del mock:
+			        	</div>
+					</div>
+		        	<div class="d-flex justify-content-around">
+		        		<div class="form-check">
+						  <input class="form-check-input" type="radio" name="chkMockDataSource" id="chkJsonData" value="json" checked="checked">
+						  <label class="form-check-label" for="chkJsonData">
+						    JSON
+						  </label>
+						</div>
+			        	<div class="form-check">
+						  <input class="form-check-input" type="radio" name="chkMockDataSource" id="chkInputs" value="inputs" disabled="disabled">
+						  <label class="form-check-label" for="chkInputs">
+						    Inputs
+						  </label>
+						</div>
+					</div>
+					<div class="form-group h-75">
+						 <label for="txtMockData"></label>
+						 <textarea class="form-control h-75 required" id="txtMockData"></textarea>
+					</div>
+		        </section>
+		        <h3>Texto Plano</h3>
+		        <section>
+		           	<div class="form-group h-75">
+						 <label for="txtPlainTextData"></label>
+						 <textarea class="form-control h-100 required" id="txtPlainTextData" readonly="readonly"></textarea>
+					</div>
+		        </section>
+		    </div>
+		</form>
+    </div>
+
+	<script
+  src="https://code.jquery.com/jquery-3.5.1.min.js"
+  integrity="sha256-9/aliU8dGd2tb6OSsuzixeV4y/faTqgFtohetphbbj0="
+  crossorigin="anonymous"></script>
+
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js" integrity="sha384-OgVRvuATP1z7JjHLkuOU7Xw704+h835Lr+6QL9UvYjZE3Ipu6Tp75j7Bh/kR0JKI" crossorigin="anonymous"></script>
+	<!--<script src="http://ajax.aspnetcdn.com/ajax/jquery.validate/1.11.1/jquery.validate.min.js"></script>-->
 	
-
-
-	
-	<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
-	<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.6/umd/popper.min.js" integrity="sha384-wHAiFfRlMFy6i5SRaxvfOCifBUQy1xHdJ/yoi7FRNXMRBu5WHdZYu1hA6ZOblgut" crossorigin="anonymous"></script>
-	<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/js/bootstrap.min.js" integrity="sha384-B0UglyR+jN6CkvvICOB2joaf5I4l3gm9GU6Hc1og6Ls7i6U/mkkaduKaBhlAXv9k" crossorigin="anonymous"></script>
-
+	<script type="text/javascript" src="lib/js/jquery-3.5.1.min.js"></script>
+	<script type="text/javascript" src="lib/js/popper.min.js"></script>
+	<script type="text/javascript" src="lib/js/bootstrap.min.js"></script>
+	<script type="text/javascript" src="lib/js/jquery.steps.min.js"></script>
 	<script type="text/javascript" src="index.js"></script>
-</body>
+  </body>
 </html>
