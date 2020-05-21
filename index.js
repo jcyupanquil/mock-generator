@@ -85,11 +85,17 @@ function extractDataFromRooClass(roo_class){
 					if(code_tag_index === 0){
 					 attributes[attributes.length-1].name = value.toLowerCase();
 					}else if(code_tag_index === 1){
-						attributes[attributes.length-1].length = Number(value);
+						attributes[attributes.length-1].index = Number(value);
 					}else{
 						attributes[attributes.length-1].type = value.toLowerCase();
 					}
 				})
+		}else if(row.indexOf('@Campo') !== -1){
+			let length = getFromStringToString(row, 'longitudMaxima = ', ')');
+			if(length.indexOf(',') != -1){
+				length = getFromStringToString(length, '', ',');
+			}
+			attributes[attributes.length-1].length = Number(length);
 		};
 	});
 	return attributes;
@@ -127,7 +133,6 @@ function fillLength(text, expected_length){
 
 $(document).ready(function() {
 	$("#txtAttributes").bind("paste", e => {
-		debugger
 		let attributes_source = $("input[name='chkMockAttributesSource']:checked").val();
 		if(attributes_source === 'descriptor'){
 			setTimeout(() => {
