@@ -14,17 +14,6 @@
       <div class="page-header mt-2 mb-3">
         <h1 class="text-center">Generador de Mock Virtual Bank</h1>
       </div>
-      <div class="card mb-3 mt-2 d-none">
-		  <div class="card-body">
-		  <form class="row">
-			  <div class="form-check ml-3 mb-2 col-md-12">
-			    <input type="checkbox" class="form-check-input" id="chkAddHeader">
-			    <label class="form-check-label" for="chkAddHeader">Incluir cabecera</label>
-			  </div>
-			</form>
-		  </div>
-		</div>
-
 
 
 		<form id="frmMockData" action="#">
@@ -43,6 +32,12 @@
 		        	</div>
 		        	<div class="d-flex justify-content-around">
 		        		<div class="form-check">
+						  <input class="form-check-input" type="radio" name="chkMockAttributesSource" id="chkRooClass" value="roo_class">
+						  <label class="form-check-label" for="chkRooClass">
+						    Clase Roo
+						  </label>
+						</div>
+		        		<div class="form-check">
 						  <input class="form-check-input" type="radio" name="chkMockAttributesSource" id="chkJsonAttr" value="json" checked="checked">
 						  <label class="form-check-label" for="chkJsonAttr">
 						    JSON
@@ -52,12 +47,6 @@
 						  <input class="form-check-input" type="radio" name="chkMockAttributesSource" id="chkDescriptor" value="descriptor">
 						  <label class="form-check-label" for="chkDescriptor">
 						    Descriptor
-						  </label>
-						</div>
-						<div class="form-check">
-						  <input class="form-check-input" type="radio" name="chkMockAttributesSource" id="chkRooClass" value="rooclass" disabled="disabled">
-						  <label class="form-check-label" for="chkRooClass">
-						    Clase Roo
 						  </label>
 						</div>
 					</div>
@@ -74,7 +63,7 @@
 						    <input type="text" class="form-control" id="txtCaseNumber" placeholder="Número de caso" maxlength="2" value="C0">
 						</div>
 						<div class="form-check col-md-6 mt-5">
-						    <input type="checkbox" class="form-check-input" id="chkAddHeader">
+						    <input type="checkbox" class="form-check-input" id="chkAddHeader" checked="checked">
 						    <label class="form-check-label" for="chkAddHeader">Incluir cabecera</label>
 						 </div>
 			        	<div class="col-12 mb-2">
@@ -97,7 +86,19 @@
 					</div>
 					<div class="form-group h-75">
 						 <label for="txtMockData"></label>
-						 <textarea class="form-control h-75 required" id="txtMockData"></textarea>
+						 <textarea class="form-control h-75 required" id="txtMockData" placeholder="Ingresar un objeto o array (varias copias). Ejemplo: 
+[{
+    &quot;idafil&quot;: &quot;0011024102999628500000AB143&quot;,
+    &quot;feciafi&quot;: &quot;2010-02-02T03:07:23Z&quot;,
+    &quot;fecfafi&quot;: &quot;2011-02-02T03:07:23Z&quot;,
+    &quot;numcuen&quot;: &quot;4940164203020153&quot;,
+    &quot;tipcuen&quot;: &quot;cKr1&quot;,
+    &quot;descuen&quot;: &quot;Easy account&quot;,
+    &quot;codinvi&quot;: &quot;Zj0DQ5gg&quot;,
+    &quot;codcamp&quot;: &quot;03001&quot;,
+    &quot;sitafil&quot;: &quot;A&quot;,
+    &quot;dessita&quot;: &quot;RjXrO7TyX0008VeLLMSX&quot;
+ }]"></textarea>
 					</div>
 		        </section>
 		        <h3>Texto Plano</h3>
