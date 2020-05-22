@@ -118,7 +118,7 @@ function createSinglePlainFormat(attributes, mock_data, transaction_code, test_c
 }
 
 function fillLength(text, expected_length){
-	text =  text !== undefined ? text.toString().replace('.','') : '';
+	text =  text !== undefined ? text.toString().replace('.0','0').normalize('NFD').replace(/[\u0300-\u036f]/g, '') : '';
   if(text.length < expected_length){
   	while(text.length < expected_length){
 	 		text += ' ';
