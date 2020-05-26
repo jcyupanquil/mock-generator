@@ -118,7 +118,8 @@ function createSinglePlainFormat(attributes, mock_data, transaction_code, test_c
 }
 
 function fillLength(text, expected_length){
-	text =  text !== undefined ? text.toString().replace('.0','0').normalize('NFD').replace(/[\u0300-\u036f]/g, '') : '';
+	text = (text !== undefined && text !== null) ? String(text) : '';
+	text =  text.toString().replace(/\.(0|1|2|3|4|5|6|7|8|9)/,text.substring(text.indexOf('.')+1,text.indexOf('.')+2)).normalize('NFD').replace(/[\u0300-\u036f]/g, '');
   if(text.length < expected_length){
   	while(text.length < expected_length){
 	 		text += ' ';
@@ -151,14 +152,14 @@ $(document).ready(function() {
 		switch($(e.currentTarget).val()){
 			case "descriptor":
 				$("#txtTransactionCode").prop("disabled", true);
-				$txtAttributes.attr("placeholder", descriptor_atributes_data_source_placeholder);
+				$txtAttributes.attr("placeholder", descriptor_atributes_data_source_placeholder).title('');
 				if($txtAttributes.val() !== ""){
 					$("#txtTransactionCode").val($txtAttributes.val($txtAttributes.val().trim()).val().substr(0,7).trim());
 				}
 			break;
 			case "json":
 				$("#txtTransactionCode").prop("disabled", false);
-				$txtAttributes.attr("placeholder", json_atributes_data_source_placeholder);
+				$txtAttributes.attr("placeholder", json_atributes_data_source_placeholder).title('');
 				break;
 			case "roo_class":
 				$("#txtTransactionCode").prop("disabled", true);
