@@ -137,7 +137,7 @@ $(document).ready(function() {
 		let attributes_source = $("input[name='chkMockAttributesSource']:checked").val();
 		if(attributes_source === 'descriptor'){
 			setTimeout(() => {
-				$("#txtTransactionCode").val($(e.currentTarget).val($(e.currentTarget).val().trim()).val().substr(0,7).trim());
+				$("#txtTransactionCode").val($(e.currentTarget).val($(e.currentTarget).val().trim()).val().substring(0,8).trim());
 			}, 100);
 		}else if (attributes_source = 'roo_class'){
 			setTimeout(() => {
@@ -152,14 +152,14 @@ $(document).ready(function() {
 		switch($(e.currentTarget).val()){
 			case "descriptor":
 				$("#txtTransactionCode").prop("disabled", true);
-				$txtAttributes.attr("placeholder", descriptor_atributes_data_source_placeholder).title('');
+				$txtAttributes.attr("placeholder", descriptor_atributes_data_source_placeholder).attr("title","");
 				if($txtAttributes.val() !== ""){
-					$("#txtTransactionCode").val($txtAttributes.val($txtAttributes.val().trim()).val().substr(0,7).trim());
+					$("#txtTransactionCode").val($txtAttributes.val($txtAttributes.val().trim()).val().substring(0,8).trim());
 				}
 			break;
 			case "json":
 				$("#txtTransactionCode").prop("disabled", false);
-				$txtAttributes.attr("placeholder", json_atributes_data_source_placeholder).title('');
+				$txtAttributes.attr("placeholder", json_atributes_data_source_placeholder).attr("title","");
 				break;
 			case "roo_class":
 				$("#txtTransactionCode").prop("disabled", true);
@@ -172,6 +172,27 @@ $(document).ready(function() {
 	}
 	});
 
+	$("#btnGenerateRandomData").click(() => {
+		let random_mock_data = {};
+		debugger
+		attributes.forEach(attribute => {
+			if(attribute.type === undefined){
+				random_mock_data[attribute.name] = chance.integer({min: 0});
+			}else{
+				switch(attribute.type){
+					case 'alfanumerico':
+						random_mock_data[attribute.name] = (Math.random()*1e32).toString(36);
+					break;
+					case 'fecha':
+						random_mock_data[attribute.name] = new Date().toISOString();
+					break;
+					default:
+						random_mock_data[attribute.name] = Math.random(36).toString().slice(2);
+				}
+			}
+		});
+		$("#txtMockData").html(JSON.stringify(random_mock_data));
+	});
 	$("#chkRooClass").prop("checked", true).trigger("change");
 });
 
@@ -184,6 +205,7 @@ $("#frmMockData").children("div").steps({
     onStepChanging: function (event, currentIndex, newIndex){
     	try{
     		if(currentIndex === 0 && newIndex === 1){
+    			$("#txtMockData").html("");
     			let attributes_source = $("input[name='chkMockAttributesSource']:checked").val();
    				switch (attributes_source){
    					case 'json':
