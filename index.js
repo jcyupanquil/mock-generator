@@ -191,7 +191,7 @@ $(document).ready(function() {
 				}
 			}
 		});
-		$("#txtMockData").html(JSON.stringify(random_mock_data));
+		$("#txtMockData").val(JSON.stringify(random_mock_data));
 	});
 	$("#chkRooClass").prop("checked", true).trigger("change");
 });
