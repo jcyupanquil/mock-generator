@@ -45,6 +45,8 @@ public class FormatoBQM59S1 {
 
 var attributes = [];
 
+const random_characters_pool = '123456789abcdefghijklmnopqrstvwxyzABCDEFGHIJQLMNOPQRSTVWXYZ';
+
 function createPlainFormat(attributes, mock_data, transaction_code, test_case_number){
 	let mockBody = '';
 	if(Array.isArray(mock_data)){
@@ -117,13 +119,22 @@ function createSinglePlainFormat(attributes, mock_data, transaction_code, test_c
 		return mockFormat += '</OC>';
 }
 
-function fillLength(text, expected_length){
+function fillLength(text, expected_length, fill_with_text = false){
 	text = (text !== undefined && text !== null) ? String(text) : '';
 	text =  text.toString().replace(/\.(0|1|2|3|4|5|6|7|8|9)/,text.substring(text.indexOf('.')+1,text.indexOf('.')+2)).normalize('NFD').replace(/[\u0300-\u036f]/g, '');
   if(text.length < expected_length){
-  	while(text.length < expected_length){
+
+  	if(fill_with_text === true){
+	    for (let i = expected_length; i > 0; i--) { 
+	        text +=  
+	           random_characters_pool[Math.floor(Math.random() * random_characters_pool.length)]; 
+	     }
+  	}else{
+  		while(text.length < expected_length){
 	 		text += ' ';
 		}
+  	}
+
   }else if(text.length > expected_length){
   	console.error(`Given value length is higher than expected, given value: ${text} length: ${text.length}, expected length: ${expected_length}\nReducing length...`);
     text = text.substr(0, expected_length);
@@ -190,6 +201,7 @@ $(document).ready(function() {
 						random_mock_data[attribute.name] = Math.random(36).toString().slice(2);
 				}
 			}
+			random_mock_data[attribute.name] = fillLength(random_mock_data[attribute.name], attribute.length, true);
 		});
 		$("#txtMockData").val(JSON.stringify(random_mock_data));
 	});
