@@ -45,7 +45,9 @@ public class FormatoBQM59S1 {
 
 var attributes = [];
 
-const random_characters_pool = '123456789abcdefghijklmnopqrstvwxyzABCDEFGHIJQLMNOPQRSTVWXYZ';
+const numbers_pool = '0123456789';
+const letters_pool = 'abcdefghijklmnopqrstvwxyzABCDEFGHIJQLMNOPQRSTVWXYZ';
+const alphanumeric_pool = numbers_pool + letters_pool;
 
 function createPlainFormat(attributes, mock_data, transaction_code, test_case_number){
 	let mockBody = '';
@@ -119,7 +121,7 @@ function createSinglePlainFormat(attributes, mock_data, transaction_code, test_c
 		return mockFormat += '</OC>';
 }
 
-function fillLength(text, expected_length, fill_with_text = false){
+function fillLength(text, expected_length, fill_with_text = false, characters_pool = alphanumeric_pool){
 	text = (text !== undefined && text !== null) ? String(text) : '';
 	text =  text.toString().replace(/\.(0|1|2|3|4|5|6|7|8|9)/,text.substring(text.indexOf('.')+1,text.indexOf('.')+2)).normalize('NFD').replace(/[\u0300-\u036f]/g, '');
   if(text.length < expected_length){
@@ -127,7 +129,7 @@ function fillLength(text, expected_length, fill_with_text = false){
   	if(fill_with_text === true){
 	    for (let i = expected_length; i > 0; i--) { 
 	        text +=  
-	           random_characters_pool[Math.floor(Math.random() * random_characters_pool.length)]; 
+	           characters_pool[Math.floor(Math.random() * characters_pool.length)]; 
 	     }
   	}else{
   		while(text.length < expected_length){
@@ -185,23 +187,22 @@ $(document).ready(function() {
 
 	$("#btnGenerateRandomData").click(() => {
 		let random_mock_data = {};
-		debugger
 		attributes.forEach(attribute => {
 			if(attribute.type === undefined){
 				random_mock_data[attribute.name] = chance.integer({min: 0});
 			}else{
 				switch(attribute.type){
 					case 'alfanumerico':
-						random_mock_data[attribute.name] = (Math.random()*1e32).toString(36);
+						random_mock_data[attribute.name] = fillLength((Math.random()*1e32).toString(36), attribute.length, true, alphanumeric_pool);
 					break;
 					case 'fecha':
-						random_mock_data[attribute.name] = new Date().toISOString();
+						random_mock_data[attribute.name] = fillLength(new Date().toISOString(), attribute.length);
 					break;
 					default:
-						random_mock_data[attribute.name] = Math.random(36).toString().slice(2);
+						random_mock_data[attribute.name] = fillLength(Math.random(36).toString().slice(2), attribute.length, true, numbers_pool);
 				}
 			}
-			random_mock_data[attribute.name] = fillLength(random_mock_data[attribute.name], attribute.length, true);
+			
 		});
 		$("#txtMockData").val(JSON.stringify(random_mock_data));
 	});
@@ -217,7 +218,6 @@ $("#frmMockData").children("div").steps({
     onStepChanging: function (event, currentIndex, newIndex){
     	try{
     		if(currentIndex === 0 && newIndex === 1){
-    			$("#txtMockData").html("");
     			let attributes_source = $("input[name='chkMockAttributesSource']:checked").val();
    				switch (attributes_source){
    					case 'json':
@@ -232,8 +232,10 @@ $("#frmMockData").children("div").steps({
    						attributes = extractDataFromRooClass($("#txtAttributes").val());
    					break;
    				};
-    			if($("#txtTransactionCode").val() === "")
+    			if($("#txtTransactionCode").val() === ""){
     				throw 'Debe proporcionar el código de transacción';
+    			}
+    			$("#btnGenerateRandomData").click();
 	    	}else if (currentIndex === 1 && newIndex === 2){
 	    		if($("#txtCaseNumber").val() === "" || $("#txtCaseNumber").val().length !== 2)
 	    			throw 'El número de caso proporcionado no es válido';
